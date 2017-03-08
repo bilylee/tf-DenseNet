@@ -156,7 +156,10 @@ def composite_function(inputs, depth, kernel_size=3, scope=None):
     output = tf.nn.relu(output)
     output = slim.conv2d(output, depth, [kernel_size, kernel_size],
                          stride=1, padding='SAME',
-                         activation_fn=None, scope='conv')
+                         biases_initializer=None,
+                         normalizer_fn=None,
+                         activation_fn=None, 
+                         scope='conv')
     output = slim.dropout(output)
     return output
 
