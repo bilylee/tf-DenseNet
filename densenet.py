@@ -309,16 +309,19 @@ def densenet_bc_k12_l40(inputs,
   depth = 12
   bottleneck_depth = depth * 4
   compress_keep_fraction = 0.5
+  layer = 40
+  units_num = (layer - 4) // 6  # Divide by 6 since each units contains two
+                                # convolutions: bottleneck conv + 3x3 conv
 
   blocks = [
       Block(
-          'block1', internal_unit, [(depth, bottleneck_depth)] * 6,
+          'block1', internal_unit, [(depth, bottleneck_depth)] * units_num,
                     transition_unit, (compress_keep_fraction,)),
       Block(
-          'block2', internal_unit, [(depth, bottleneck_depth)] * 6,
+          'block2', internal_unit, [(depth, bottleneck_depth)] * units_num,
                     transition_unit, (compress_keep_fraction,)),
       Block(
-          'block3', internal_unit, [(depth, bottleneck_depth)] * 6,
+          'block3', internal_unit, [(depth, bottleneck_depth)] * units_num,
                     None, None),
   ]
 
